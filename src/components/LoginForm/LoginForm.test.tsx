@@ -3,10 +3,13 @@ import { waitFor, fireEvent, render, screen } from '@testing-library/react'
 import LoginForm from '.';
 import { useNavigate } from 'react-router-dom';
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => jest.fn(),
-}));
+jest.mock('react-router-dom', () => {
+    const navigate = jest.fn();
+    return {
+      ...jest.requireActual('react-router-dom'),
+      useNavigate: () => navigate,
+    };
+  });
 
 describe('test login form', () => {
     const mockProps = jest.fn();

@@ -43,7 +43,7 @@ const CategoryForm = ({ onSubmit, category } : Props) => {
                 <div>
                     <Typography.Paragraph>{'Product Status'}</Typography.Paragraph>
                     <Select 
-                        // name={'status'}
+                        data-testid="product-status"
                         value={formMik.values.is_active} 
                         onChange={(value) => formMik.setFieldValue('is_active', value)}
                         status={formMik.errors.is_active ? 'error' : undefined}
