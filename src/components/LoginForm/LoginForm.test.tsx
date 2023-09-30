@@ -1,6 +1,12 @@
 import React from 'react';
 import { waitFor, fireEvent, render, screen } from '@testing-library/react'
 import LoginForm from '.';
+import { useNavigate } from 'react-router-dom';
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => jest.fn(),
+}));
 
 describe('test login form', () => {
     const mockProps = jest.fn();
@@ -53,4 +59,19 @@ describe('test login form', () => {
             });
         });
     });
+
+    beforeEach(() => {
+        const navigate = useNavigate() as jest.Mock;
+        navigate.mockClear();
+      });
+
+    test('registration button click navigates to /register', () => {
+        const { getByText } = render(<LoginForm onSubmit={mockProps}/>);
+        const registerButton = getByText('Register');
+      
+        fireEvent.click(registerButton);
+      
+        const navigate = useNavigate();
+        expect(navigate).toHaveBeenCalledWith('/register');
+      });  
 })
